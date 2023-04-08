@@ -1,20 +1,28 @@
 import { Collection } from "discord.js";
 import Tom5 from "../classes/Tom5";
 import fs from "fs"
+import chalk from "chalk";
 
 export default class CommandsManager {
 
     client: Tom5
-    comandos: Collection<string, object>
-    aliases: Collection<string, object>
 
     constructor(client: Tom5) {
         this.client = client
-        this.comandos = new Collection()
-        this.aliases = new Collection()
     }
 
     async loadCommands(): Promise<void> {
+
+        console.log(
+            chalk.bold.yellow(
+                "[COMANDOS]"
+            ),
+            "A debugar..."
+        )
+
+        this.client.application?.commands.cache.forEach(async (cmd) => { 
+            await cmd.delete()
+        })
 
         const pastas = fs.readdirSync("./src/commands/")
 
@@ -24,19 +32,21 @@ export default class CommandsManager {
 
             files.forEach(async (arquivo) => {
 
-                const commandClass = (await import(`../commands/${pasta}/${arquivo}`)).default
+                const { Comando } = await import(`../commands/${pasta}/${arquivo}`)
 
-                const comando = new commandClass(this.client)
+                const comando = new Comando(this.client)
 
-                this.comandos.set(comando.name, comando)
+                this.client.application?.commands.create(comando)
 
-                if(comando.aliases?.length > 0) {
-
-                    for(let aliase in comando.aliases) {
-                        this.aliases.set(aliase, comando)
-                    }
-                }
+                this.client.utils.commands.set(comando.name, comando)
             })
         })
+
+        console.log(
+            chalk.bold.green(
+                "[COMANDOS]"
+            ),
+            "Debugados"
+        )
     }
 }

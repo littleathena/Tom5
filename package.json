@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "npm i",
-    "start": "ts-node src/launcher.ts"
+    "start": "ts-node src/launcher.ts",
+    "loop": "nodemon src/launcher.ts"
   },
   "repository": {
     "type": "git",

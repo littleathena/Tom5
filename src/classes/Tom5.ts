@@ -1,8 +1,26 @@
-import { Client, GatewayIntentBits, Options, ActivityType
+import { Client, GatewayIntentBits, Options, ActivityType, Collection
  } from "discord.js";
 import { LoggerOptions, createLogger as createWinstonLogger } from "winston";
+import CommandsManager from "../managers/commandsManager";
+import EventsManager from "../managers/eventsManager";
+import chalk from "chalk"
 
 export default class Tom5 extends Client {
+    
+    public utils: { 
+        commands: Collection<string, object>;
+        events: Collection<string, object>; 
+    };
+    public managers!: {
+        commandsManager: CommandsManager;
+        eventsManager: EventsManager;
+    }
+    public devs: string[];
+    public _emojis: { 
+        certo: string; 
+        errado: string; 
+        load: string; 
+    };
 
     constructor() {
         super(
@@ -40,7 +58,7 @@ export default class Tom5 extends Client {
                     GatewayIntentBits.MessageContent,
                 ],
                 presence: {
-                    status: process.env.enviroment === "dev" ? "idle" : "online",
+                    status: process.env.ENVIROMENT == "dev" ? "idle" : "online",
                     activities: [
                         {
                             name: "⟨ /help ⟩ - Ask for help!",
@@ -48,12 +66,40 @@ export default class Tom5 extends Client {
                         }
                     ]
                 }
-            }
+            },
+        );
+        this.utils = {
+            commands: new Collection<string, object>(),
+            events: new Collection<string, object>()
+        },
+        this.managers = {
+            commandsManager: new CommandsManager(this),
+            eventsManager: new EventsManager(this)
+        },
+        this.devs = ["541030181616222218"],
+        this._emojis = {
+            "certo": "<:tom5_icons_Correct:1013543813647704105>",
+            "errado": "<:tom5_icons_Wrong:1013544051611533373>",
+            "load": "<a:load:1036030535060967476>"
+        }
+    }
+
+    async init(): Promise<any> {
+
+        await this.login(process.env.DISCORD_TOKEN)
+        
+        await this.loadModules()
+
+        console.log(
+            chalk.bold.green(
+                "[CLIENT]"
+            ),
+            "Conectado"
         )
     }
 
-    async init(): Promise<void> {
-
-        await this.login(process.env.DISCORD_TOKEN)
+    async loadModules(): Promise<any> {
+        await this.managers.commandsManager.loadCommands()
+        await this.managers.eventsManager.loadEvents()
     }
 }

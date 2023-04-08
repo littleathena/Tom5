@@ -1,29 +1,26 @@
-import { ApplicationCommandOption, Awaitable } from "discord.js";
+import { ApplicationCommandOption, Awaitable, PermissionFlags } from "discord.js";
 import CommandOptions from "../interfaces/commandOptions";
-import DeveloperOptions from "../interfaces/developerOptions";
 import ExecuteOptions from "../interfaces/executeOptions";
 
-export default class Command implements CommandOptions, DeveloperOptions {
+export default class Command implements CommandOptions {
     
     name!: string;
     description!: string;
-    aliases?: string[] | undefined;
-    type?: number | undefined;
+    type!: any;
     options?: ApplicationCommandOption[] | undefined;
     devOnly?: boolean | undefined;
-    userPermissions?: string[] | undefined;
-    botPermissions?: string[] | undefined;
+    userPermissions?:Array<keyof PermissionFlags> | undefined;
+    botPermissions?: Array<keyof PermissionFlags> | undefined;
     execute!: (options: ExecuteOptions) => Awaitable<any>;
     
-    constructor(cmdOptions: CommandOptions, devOptions: DeveloperOptions)  {
+    constructor(cmdOptions: CommandOptions)  {
         this.name = cmdOptions.name,
         this.description = cmdOptions.description,
-        this.aliases = cmdOptions.aliases,
         this.type = cmdOptions.type,
         this.options = cmdOptions.options
-        this.devOnly = devOptions.devOnly,
-        this.userPermissions = devOptions.userPermissions,
-        this.botPermissions = devOptions.botPermissions,
-        this.execute = () => {}
+        this.devOnly = cmdOptions?.devOnly,
+        this.userPermissions = cmdOptions?.userPermissions,
+        this.botPermissions = cmdOptions?.botPermissions,
+        this.execute = (options: ExecuteOptions) => {}
     }
 }
