@@ -34,7 +34,9 @@ export default class EventsManager {
 
                 const event = new Evento(this.client)
 
-                this.client.utils.events.set(event.name, event)
+                const nome = arquivo.replace(".ts", "")
+
+                this.client.utils.events.set(nome, event)
 
                 switch(event.once) {
                     case true: {

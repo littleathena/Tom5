@@ -30,7 +30,7 @@ export class Evento extends Event<"interactionCreate"> {
                     if(!client.devs.includes(interaction.user.id)) {
                         return await interaction.reply(
                             {
-                                content: `(${client._emojis.errado}) Apenas os meus desenvolvedores podem usar este comando.`
+                                content: `**(${client._emojis.errado}) Apenas os meus desenvolvedores podem usar este comando.**`
                             }
                         )
                     }
@@ -45,10 +45,10 @@ export class Evento extends Event<"interactionCreate"> {
                         let permsMembro = (await interaction.guild?.members.fetch(membro.user.id))?.permissions.toArray()
 
                         for(let perm of slashCommand.userPermissions) {
-                            if(!permsMembro?.includes(perm)) {
+                            if(!permsMembro?.includes(perm) && !permsMembro?.includes("Administrator")) {
                                 return await interaction.reply(
                                     {
-                                        content: `(${client._emojis.errado}) Não tens permissão para usar este comando [\`${perm}\`].`
+                                        content: `**(${client._emojis.errado}) Não tens permissão para usar este comando [\`${perm}\`].**`
                                     }
                                 )
                             }
@@ -63,10 +63,10 @@ export class Evento extends Event<"interactionCreate"> {
                         let permsBot = interaction.guild?.members.me?.permissions.toArray()
 
                         for(let perm of slashCommand.botPermissions) {
-                            if(!permsBot?.includes(perm)) {
+                            if(!permsBot?.includes(perm) && !permsBot?.includes("Administrator")) {
                                 return await interaction.reply(
                                     {
-                                        content: `(${client._emojis.errado}) Não tenho permissões suficientes para executar este comando [\`${perm}\`].`
+                                        content: `**(${client._emojis.errado}) Não tenho permissões suficientes para executar este comando [\`${perm}\`].**`
                                     }
                                 )
                             }

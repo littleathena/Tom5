@@ -20,9 +20,7 @@ export default class CommandsManager {
             "A debugar..."
         )
 
-        this.client.application?.commands.cache.forEach(async (cmd) => { 
-            await cmd.delete()
-        })
+        await this.client.application?.commands.set([])
 
         const pastas = fs.readdirSync("./src/commands/")
 
