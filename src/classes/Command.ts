@@ -7,6 +7,7 @@ export default class Command implements CommandOptions {
     name!: string;
     description!: string;
     type!: any;
+    usage!: string
     options?: ApplicationCommandOption[] | undefined;
     devOnly?: boolean | undefined;
     userPermissions?:Array<keyof PermissionFlags> | undefined;
@@ -17,6 +18,7 @@ export default class Command implements CommandOptions {
         this.name = cmdOptions.name,
         this.description = cmdOptions.description,
         this.type = cmdOptions.type,
+        this.usage = cmdOptions.usage
         this.options = cmdOptions.options
         this.devOnly = cmdOptions?.devOnly,
         this.userPermissions = cmdOptions?.userPermissions,

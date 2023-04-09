@@ -15,6 +15,7 @@ export class Comando extends Command {
                 name: "eval",
                 description: "[🧪] Comando para executar códigos",
                 type: ApplicationCommandType.ChatInput,
+                usage: "/eval <code>",
                 options: [
                     {
                         name: "code",
