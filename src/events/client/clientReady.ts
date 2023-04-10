@@ -9,7 +9,7 @@ export class Evento extends Event<"ready"> {
         super(
             {
                 name: "ready",
-                once: true,
+                once: false,
             }
         )
         this.client = client

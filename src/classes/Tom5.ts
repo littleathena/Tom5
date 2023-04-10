@@ -40,10 +40,11 @@ export default class Tom5 extends Client {
                     }
                 ),
                 intents: [
+                    GatewayIntentBits.AutoModerationConfiguration,
+                    GatewayIntentBits.AutoModerationExecution,
                     GatewayIntentBits.DirectMessageReactions,
                     GatewayIntentBits.DirectMessageTyping,
                     GatewayIntentBits.DirectMessages,
-                    GatewayIntentBits.GuildBans,
                     GatewayIntentBits.GuildEmojisAndStickers,
                     GatewayIntentBits.GuildIntegrations,
                     GatewayIntentBits.GuildInvites,
@@ -51,11 +52,13 @@ export default class Tom5 extends Client {
                     GatewayIntentBits.GuildMessageReactions,
                     GatewayIntentBits.GuildMessageTyping,
                     GatewayIntentBits.GuildMessages,
+                    GatewayIntentBits.GuildModeration,
+                    GatewayIntentBits.GuildPresences,
                     GatewayIntentBits.GuildScheduledEvents,
                     GatewayIntentBits.GuildVoiceStates,
                     GatewayIntentBits.GuildWebhooks,
                     GatewayIntentBits.Guilds,
-                    GatewayIntentBits.MessageContent,
+                    GatewayIntentBits.MessageContent
                 ],
                 presence: {
                     status: process.env.ENVIROMENT == "dev" ? "idle" : "online",

@@ -15,7 +15,7 @@ export class Comando extends Command {
                 usage: "/help",
                 devOnly: false,
                 userPermissions: ["SendMessages"],
-                botPermissions: ["SendMessages", "ManageMessages", "EmbedLinks"]
+                botPermissions: ["SendMessages", "EmbedLinks"]
             }
         )
         this.client = client
@@ -33,7 +33,6 @@ export class Comando extends Command {
                     case "[🧪]": {
 
                         devCommands = comandos.filter(c => c.description.startsWith("[🧪]"))
-                        // devCommands = devCommands.map(c => c.description.replace("[🧪]", ""))
 
                         break
 
@@ -42,7 +41,6 @@ export class Comando extends Command {
                     case "[🎵]": {
 
                         musicCommands = comandos.filter(c => c.description.startsWith("[🎵]"))
-                        // musicCommands = musicCommands.map(c => c.description.replace("[🎵]", ""))
 
                         break
                     }
@@ -50,7 +48,6 @@ export class Comando extends Command {
                     case "[📒]": {
 
                         utilCommands = comandos.filter(c => c.description.startsWith("[📒]"))
-                        // utilCommands = utilCommands.map(c => c.description.replace("[📒]", ""))
 
                         break
                     }
@@ -91,7 +88,8 @@ export class Comando extends Command {
                             )
                             .setStyle(ButtonStyle.Secondary)
                         )
-                    ]
+                    ],
+                    fetchReply: true
                 }
             )
 
@@ -103,6 +101,8 @@ export class Comando extends Command {
                 }
             ).on("collect", async (i) => {
 
+                i.deferUpdate()
+
                 switch(i.customId) {
                     
                     case "help_commands": {
@@ -111,11 +111,11 @@ export class Comando extends Command {
                             {
                                 content: `(${this.client._emojis.load}) A carregar comandos...`,
                                 embeds: [],
-                                components: []
+                                components: [],
                             }
                         )
 
-                        await new Promise(resolve => setTimeout(resolve, 5000))
+                        await new Promise(resolve => setTimeout(resolve, 2500))
 
                         await msg.edit(
                             {
@@ -373,6 +373,203 @@ export class Comando extends Command {
 
                     case "help_systems": {
 
+                        await msg.edit(
+                            {
+                                content: `(${this.client._emojis.load}) A carregar sistemas...`,
+                                embeds: [],
+                                components: []
+                            }
+                        )
+
+                        const sistemas = [
+                            {
+                                name: "Música",
+                                description: "Reproduz músicas através de __Lavalink__. Aceita **todas as plataformas de streaming** (\`Spotify\`, \`SoundCloud\`, \`Deezer\`, etc) menos o \`YouTube\` (por direitos da Google).",
+                                commands: [],
+                                infosAdd: null
+                            },
+                            {
+                                name: "Parcerias",
+                                description: "Parcerias feitas com o Tom5 e/ou o servidor do seu criador (TomG).",
+                                commands: [],
+                                infosAdd: "Tudo o que precisa fazer para entrar em contacto com a equipa de parcerias é enviar mensagem no privado do Tom5 escrito **\`t.parceria\`**, e seguir as indicações do bot."
+                            }
+                        ]
+
+                        await new Promise(resolve => setTimeout(resolve, 2500))
+
+                        await msg.edit(
+                            {
+                                content: `(${this.client._emojis.certo}) Carreguei todos os meus sistemas.`,
+                                embeds: [
+                                    new EmbedBuilder()
+                                    .setColor("#2a2d31")
+                                    .setDescription(`> Seleciona o sistema abaixo.`)
+                                ],
+                                components: [
+                                    new ActionRowBuilder<StringSelectMenuBuilder>()
+                                    .addComponents(
+                                        new StringSelectMenuBuilder()
+                                        .setCustomId("help_systems_menu")
+                                        .setPlaceholder("Selecionar Sistema")
+                                        .setOptions(
+                                            [
+                                                {
+                                                    label: "Música",
+                                                    value: "music",
+                                                    emoji: {
+                                                        animated: false,
+                                                        id: "1013546723018285199",
+                                                        name: "tom5_icons_music"
+                                                    }
+                                                },
+                                                {
+                                                    label: "Parcerias",
+                                                    value: "parcerias",
+                                                    emoji: {
+                                                        animated: false,
+                                                        id: "1013546823857746001",
+                                                        name: "tom5_icons_partner"
+                                                    }
+                                                },
+                                            ]
+                                        )
+                                    )
+                                ]
+                            }
+                        )
+
+                        await msg.createMessageComponentCollector(
+                            {
+                                componentType: ComponentType.StringSelect,
+                                time: 10 * 60 * 1000,
+                                filter: (u) => u.user.id === ctx.interaction.user.id
+                            },
+                        ).on("collect", async (i) => {
+
+                            let cmds = async (x: number) => {
+
+                                let string = ""
+
+                                for(let c of sistemas[x].commands) {
+
+                                    let cmd = (await this.client.application?.commands.fetch())?.filter(a => a.name === c).map(a => a)[0]!
+
+                                    let cmd2: any = this.client.utils.commands.get(c)
+
+                                    let desc = cmd.description.replace("[🧪] ", "")?.replace("[🎵] ", "")?.replace("[📒] ", "")
+
+                                    string += `> - </${cmd.name}:${cmd.id}> ${desc} [\`${cmd2.usage}\`]\n`
+                                }
+
+                                return string
+                            }
+
+                            switch(i.values[0]) {
+
+                                case "music": {
+
+                                    let res;
+
+                                    if(sistemas[0].commands.length > 0) {
+                                        res = await cmds(0)
+                                    } else {
+                                        res = `\`Sem comandos registados\``
+                                    }
+
+                                    i.update(
+                                        {
+                                            content: `(<:tom5_icons_OAuth2:1013547865194377338>) Sistema: **\`${sistemas[0].name}\`**\n(<:tom5_icons_richpresence:1013546742383382549>) Descrição:\n> ${sistemas[0].description}\n(<:tom5_icons_store:1013545540950184047>) Comandos associados: \n${res}`,
+                                            embeds: [],
+                                            components: [
+                                                new ActionRowBuilder<StringSelectMenuBuilder>()
+                                                .addComponents(
+                                                    new StringSelectMenuBuilder()
+                                                    .setCustomId("help_systems_menu")
+                                                    .setPlaceholder("Selecionar Sistema")
+                                                    .setOptions(
+                                                        [
+                                                            {
+                                                                label: "Música",
+                                                                value: "music",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013546723018285199",
+                                                                    name: "tom5_icons_music"
+                                                                },
+                                                                default: true
+                                                            },
+                                                            {
+                                                                label: "Parcerias",
+                                                                value: "parcerias",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013546823857746001",
+                                                                    name: "tom5_icons_partner"
+                                                                }
+                                                            },
+                                                        ]
+                                                    )
+                                                )
+                                            ]
+                                        }
+                                    )
+
+                                    break
+                                }
+
+                                case "parcerias": {
+
+                                    let res;
+
+                                    if(sistemas[1].commands.length > 0) {
+                                        res = await cmds(1)
+                                    } else {
+                                        res = `\`Sem comandos registados\``
+                                    }
+
+                                    i.update(
+                                        {
+                                            content: `(<:tom5_icons_OAuth2:1013547865194377338>) Sistema: **\`${sistemas[1].name}\`**\n(<:tom5_icons_richpresence:1013546742383382549>) Descrição:\n> ${sistemas[1].description}\n(<:tom5_icons_store:1013545540950184047>) Comandos associados: \n${res}`,
+                                            embeds: [],
+                                            components: [
+                                                new ActionRowBuilder<StringSelectMenuBuilder>()
+                                                .addComponents(
+                                                    new StringSelectMenuBuilder()
+                                                    .setCustomId("help_systems_menu")
+                                                    .setPlaceholder("Selecionar Sistema")
+                                                    .setOptions(
+                                                        [
+                                                            {
+                                                                label: "Música",
+                                                                value: "music",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013546723018285199",
+                                                                    name: "tom5_icons_music"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Parcerias",
+                                                                value: "parcerias",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013546823857746001",
+                                                                    name: "tom5_icons_partner"
+                                                                },
+                                                                default: true
+                                                            },
+                                                        ]
+                                                    )
+                                                )
+                                            ]
+                                        }
+                                    )
+
+                                    break
+                                }
+                            }
+                        })
 
                         break
                     }
