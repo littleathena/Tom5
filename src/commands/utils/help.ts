@@ -23,9 +23,9 @@ export class Comando extends Command {
 
             const comandos = (await this.client.application?.commands.fetch()!).map(c => c)
 
-            const categorias = ["[🧪]", "[🎵]", "[📒]"]
+            const categorias = ["[🧪]", "[🪙]", "[🎵]", "[📒]"]
 
-            var devCommands: Array<any>, musicCommands: Array<any>, utilCommands: Array<any>;
+            var devCommands: Array<any>, ecoCommands: Array<any>, musicCommands: Array<any>, utilCommands: Array<any>;
 
             for(let categoria of categorias) {
 
@@ -33,6 +33,14 @@ export class Comando extends Command {
                     case "[🧪]": {
 
                         devCommands = comandos.filter(c => c.description.startsWith("[🧪]"))
+
+                        break
+
+                    }
+
+                    case "[🪙]": {
+
+                        ecoCommands = comandos.filter(c => c.description.startsWith("[🪙]"))
 
                         break
 
@@ -143,6 +151,15 @@ export class Comando extends Command {
                                                     }
                                                 },
                                                 {
+                                                    label: "Econommia",
+                                                    value: "eco",
+                                                    emoji: {
+                                                        animated: false,
+                                                        id: "1013544459503423618",
+                                                        name: "tom5_icons_dollar"
+                                                    }
+                                                },
+                                                {
                                                     label: "Música",
                                                     value: "music",
                                                     emoji: {
@@ -213,6 +230,87 @@ export class Comando extends Command {
                                                                 default: true
                                                             },
                                                             {
+                                                                label: "Econommia",
+                                                                value: "eco",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013544459503423618",
+                                                                    name: "tom5_icons_dollar"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Música",
+                                                                value: "music",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013546723018285199",
+                                                                    name: "tom5_icons_music"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Úteis",
+                                                                value: "utils",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013544466398855258",
+                                                                    name: "tom5_icons_file"
+                                                                }
+                                                            }
+                                                        ]
+                                                    )
+                                                )
+                                            ]
+                                        }
+                                    )
+
+                                    break
+                                }
+
+                                case "eco": {
+
+                                    var msgEcoCommands = ""
+
+                                    for(let i = 0; i < ecoCommands.length; i++) {
+
+                                        let ecoCmd: ApplicationCommand = ecoCommands[i]
+
+                                        let cmd1: any = this.client.utils.commands.get(ecoCmd.name)
+
+                                        msgEcoCommands += `- </${ecoCmd.name}:${ecoCmd.id}> ${ecoCmd.description.replace("[🪙] ", "")} [\`${cmd1?.usage}\`]\n`
+                                    }
+
+                                    i2.update(
+                                        {
+                                            content: msgEcoCommands,
+                                            embeds: [],
+                                            components: [
+                                                new ActionRowBuilder<StringSelectMenuBuilder>()
+                                                .addComponents(
+                                                    new StringSelectMenuBuilder()
+                                                    .setCustomId("help_commands_menu")
+                                                    .setPlaceholder("Selecionar Categoria")
+                                                    .setOptions(
+                                                        [
+                                                            {
+                                                                label: "Desenvolvedores",
+                                                                value: "devs",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013546693997891615",
+                                                                    name: "tom5_icons_code"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Econommia",
+                                                                value: "eco",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013544459503423618",
+                                                                    name: "tom5_icons_dollar"
+                                                                },
+                                                                default: true
+                                                            },
+                                                            {
                                                                 label: "Música",
                                                                 value: "music",
                                                                 emoji: {
@@ -272,6 +370,15 @@ export class Comando extends Command {
                                                                     animated: false,
                                                                     id: "1013546693997891615",
                                                                     name: "tom5_icons_code"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Econommia",
+                                                                value: "eco",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013544459503423618",
+                                                                    name: "tom5_icons_dollar"
                                                                 }
                                                             },
                                                             {
@@ -335,6 +442,15 @@ export class Comando extends Command {
                                                                     animated: false,
                                                                     id: "1013546693997891615",
                                                                     name: "tom5_icons_code"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Econommia",
+                                                                value: "eco",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013544459503423618",
+                                                                    name: "tom5_icons_dollar"
                                                                 }
                                                             },
                                                             {

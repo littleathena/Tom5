@@ -21,6 +21,7 @@ export class Evento extends Event<"interactionCreate"> {
             const channel = await this.client.channels.cache.get(process.env.LOGS_CHANNEL!)!
 
             if(!channel.isTextBased()) return
+            if(!interaction.channel?.isTextBased()) return
 
             channel.send(
                 {
@@ -37,6 +38,12 @@ export class Evento extends Event<"interactionCreate"> {
                                 {
                                     name: `<:tom5_icons_globe:1013545455898071100> Servidor`,
                                     value: `\`${interaction.guild?.name}\` - ${await interaction.guild?.fetchOwner()} \`${(await interaction.guild?.fetchOwner())?.user.tag} ${(await interaction.guild?.fetchOwner())?.id}\``,
+                                    inline: false
+                                },
+                                {
+                                    name: `<:tom5_icons_channel:1013544410677530786> Canal`,
+                                    value: `${interaction.channel} \`${interaction
+                                    .channel.id}\``,
                                     inline: false
                                 },
                                 {
