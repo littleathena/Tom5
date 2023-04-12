@@ -14,6 +14,7 @@ export class Evento extends Event<"ready"> {
         )
         this.client = client
         this.execute = async () => {
+            
             console.log("Client Ligado")
         }
     }
