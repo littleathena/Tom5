@@ -62,12 +62,12 @@ export class Comando extends Command {
                 }
             }
 
-            var msg = await ctx.interaction.reply(
+            var msg = await ctx.interaction?.reply(
                 {
                     embeds: [
                         new EmbedBuilder()
                         .setColor("#2a2d31")
-                        .setDescription(`**Olá ${ctx.interaction.user}! Precisas de ajuda?**\n\n> Seleciona abaixo o tipo de ajuda que desjas receber.`)
+                        .setDescription(`**Olá ${ctx.interaction?.user}! Precisas de ajuda?**\n\n> Seleciona abaixo o tipo de ajuda que desjas receber.`)
                     ],
                     components: [
                         new ActionRowBuilder<ButtonBuilder>()
@@ -99,13 +99,13 @@ export class Comando extends Command {
                     ],
                     fetchReply: true
                 }
-            )
+            )!
 
             await msg.createMessageComponentCollector(
                 {
                     componentType: ComponentType.Button,
                     time: 1 * 60 * 1000,
-                    filter: (u) => u.user.id === ctx.interaction.user.id
+                    filter: (u) => u.user.id === ctx.interaction?.user.id
                 }
             ).on("collect", async (i) => {
 
@@ -188,7 +188,7 @@ export class Comando extends Command {
                             {
                                 componentType: ComponentType.StringSelect,
                                 time: 10 * 60 * 1000,
-                                filter: (u) => u.user.id === ctx.interaction.user.id
+                                filter: (u) => u.user.id === ctx.interaction?.user.id
                             }
                         ).on("collect", async (i2) => {
 
@@ -567,7 +567,7 @@ export class Comando extends Command {
                             {
                                 componentType: ComponentType.StringSelect,
                                 time: 10 * 60 * 1000,
-                                filter: (u) => u.user.id === ctx.interaction.user.id
+                                filter: (u) => u.user.id === ctx.interaction?.user.id
                             },
                         ).on("collect", async (i) => {
 

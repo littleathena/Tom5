@@ -12,9 +12,9 @@ class UnresolvedTrack {
         this.vulkava = vulkava;
         this.title = title;
         this.author = author;
-        this.duration = duration ?? 0;
-        this.uri = uri ?? '';
-        this.source = source ?? 'Unknown';
+        this.duration = duration ? 0;
+        this.uri = uri ? '';
+        this.source = source ? 'Unknown';
         if (isrc && vulkava.useISRC)
             this.isrc = isrc;
         this.requester = null;

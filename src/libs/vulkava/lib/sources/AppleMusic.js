@@ -166,7 +166,7 @@ class AppleMusic extends AbstractExternalSource_1.AbstractExternalSource {
             }).then(r => r.body.text());
             const tokenMatch = script.match(AppleMusic.TOKEN_REGEX);
             if (tokenMatch) {
-                this.token = tokenMatch.groups?.['token'] ?? null;
+                this.token = tokenMatch.groups?.['token'] ? null;
                 break;
             }
         }
@@ -186,6 +186,6 @@ class AppleMusicError {
         this.detail = errorRes.errors[0].detail;
     }
     toString() {
-        return `AppleMusicError: ${this.detail ?? this.title}`;
+        return `AppleMusicError: ${this.detail ? this.title}`;
     }
 }

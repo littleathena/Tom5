@@ -131,7 +131,7 @@ class RESTManager {
         const { method, path, json } = options;
         const headers = {
             ...options.headers,
-            'authorization': this.node.options.password ?? '',
+            'authorization': this.node.options.password ? '',
         };
         let body = null;
         if (json) {

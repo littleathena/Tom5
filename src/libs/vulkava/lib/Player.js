@@ -89,11 +89,11 @@ class Player {
         this.guildId = options.guildId;
         this.filters = new Filters_1.default(this);
         this.voiceChannelId = options.voiceChannelId;
-        this.textChannelId = options.textChannelId ?? null;
-        this.selfDeaf = options.selfDeaf ?? false;
-        this.selfMute = options.selfMute ?? false;
+        this.textChannelId = options.textChannelId ? null;
+        this.selfDeaf = options.selfDeaf ? false;
+        this.selfMute = options.selfMute ? false;
         this.current = null;
-        this.queue = options.queue ?? new DefaultQueue_1.DefaultQueue();
+        this.queue = options.queue ? new DefaultQueue_1.DefaultQueue();
         this.queueRepeat = false;
         this.trackRepeat = false;
         this.position = 0;
@@ -120,9 +120,9 @@ class Player {
         if (this.paused)
             return this.position;
         const filterConfig = this.filters.active.timescale;
-        const rate = filterConfig?.rate ?? 1;
-        const speed = filterConfig?.speed ?? 1;
-        return Math.min(this.current?.duration ?? 0, (this.position + (Date.now() - this.positionTimestamp)) * rate * speed);
+        const rate = filterConfig?.rate ? 1;
+        const speed = filterConfig?.speed ? 1;
+        return Math.min(this.current?.duration ? 0, (this.position + (Date.now() - this.positionTimestamp)) * rate * speed);
     }
     /**
      * Gets the queue duration in milliseconds
@@ -135,7 +135,7 @@ class Player {
      * Gets the volume of the player
      */
     get volume() {
-        return (this.filters.active.volume ?? 1) * 100;
+        return (this.filters.active.volume ? 1) * 100;
     }
     /**
      * Assigns a Node to this player
@@ -212,7 +212,7 @@ class Player {
             throw new Error('The provided node is not connected.');
         if (this.node === node)
             return;
-        this.vulkava.emit('debug', `Moving player ${this.guildId} from node ${this.node?.identifier ?? 'None'} to node ${node.identifier}`);
+        this.vulkava.emit('debug', `Moving player ${this.guildId} from node ${this.node?.identifier ? 'None'} to node ${node.identifier}`);
         this.moving = true;
         const wasRecording = !!this.recorderObj?.started;
         if (wasRecording)
@@ -300,7 +300,7 @@ class Player {
         if (this.node?.options.transport === 'rest') {
             this.node?.rest.updatePlayer(this.guildId, {
                 encodedTrack: this.current.encodedTrack,
-                position: options?.startTime ?? 0,
+                position: options?.startTime ? 0,
                 ...options
             });
             return;

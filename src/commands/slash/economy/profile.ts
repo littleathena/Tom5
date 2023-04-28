@@ -40,7 +40,7 @@ export class Comando extends Command {
                 return string
             }
 
-            let user = ctx.interaction.options.getUser("user_id") || ctx.interaction.user
+            let user = ctx.interaction?.options.getUser("user_id") || ctx.interaction?.user!
 
             let Canva = canvas.createCanvas(850, 1200)
             let ctxCanva = Canva.getContext("2d")
@@ -110,7 +110,7 @@ export class Comando extends Command {
             ctxCanva.clip()
             ctxCanva.drawImage(userAvatar, 60, 175, 250, 250)
 
-            ctx.interaction.reply(
+            ctx.interaction?.reply(
                 {
                     files: [
                         new AttachmentBuilder(

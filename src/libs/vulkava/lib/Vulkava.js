@@ -105,9 +105,9 @@ class Vulkava extends events_1.EventEmitter {
         super();
         Vulkava.checkOptions(options);
         this.nodes = [];
-        this.defaultSearchSource = options.defaultSearchSource ?? 'youtube';
-        this.unresolvedSearchSource = options.unresolvedSearchSource ?? 'youtube';
-        this.useISRC = options.useISRC ?? true;
+        this.defaultSearchSource = options.defaultSearchSource ? 'youtube';
+        this.unresolvedSearchSource = options.unresolvedSearchSource ? 'youtube';
+        this.useISRC = options.useISRC ? true;
         this.externalSources = [];
         if (options.disabledSources) {
             if (!options.disabledSources.includes('APPLE_MUSIC'))

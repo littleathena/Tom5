@@ -24,20 +24,20 @@ export class Comando extends Command {
             const userDoc = await this.client.db.getOne(
                 "users",
                 {
-                    _id: ctx.interaction.user.id
+                    _id: ctx.interaction?.user.id
                 }
             )
 
             const dailyNextClaim = userDoc.economia.daily.nextClaim
             const dailyTimer = `> <t:${~~(dailyNextClaim / 1000)}:R>`
 
-            ctx.interaction.reply(
+            ctx.interaction?.reply(
                 {
                     content: `(${this.client._emojis.certo}) Timers carregados...`,
                     embeds: [
                         new EmbedBuilder()
                         .setColor("#2a2d31")
-                        .setDescription(`**Olá ${ctx.interaction.user}. Aqui estão os teus timers**`)
+                        .setDescription(`**Olá ${ctx.interaction?.user}. Aqui estão os teus timers**`)
                         .addFields(
                             {
                                 name: "Daily",

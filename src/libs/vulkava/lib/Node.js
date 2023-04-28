@@ -116,10 +116,10 @@ class Node {
     get totalPenalties() {
         if (this.state !== NodeState.CONNECTED || !this.ws)
             return Infinity;
-        return this.penalties ?? 0;
+        return this.penalties ? 0;
     }
     get identifier() {
-        return this.options.id ?? this.options.hostname;
+        return this.options.id ? this.options.hostname;
     }
     calcPenalties() {
         // Taken from https://github.com/freyacodes/Lavalink-Client/blob/master/src/main/java/lavalink/client/io/LavalinkLoadBalancer.java#L135-L146
@@ -207,7 +207,7 @@ class Node {
             const pong = (node, ping) => {
                 if (node !== this)
                     return;
-                resolve(ping ?? (Date.now() - t1));
+                resolve(ping ? (Date.now() - t1));
                 this.vulkava.removeListener('pong', pong);
                 clearTimeout(rejectTimeout);
             };
@@ -233,7 +233,7 @@ class Node {
         const payload = {
             op: 'configureResuming',
             key: this.options.resumeKey,
-            timeout: this.options.resumeTimeout ?? 60
+            timeout: this.options.resumeTimeout ? 60
         };
         this.send(payload);
     }
@@ -432,7 +432,7 @@ class Node {
                     this.rest.sessionId = payload.sessionId;
                 }
                 if (!payload.resumed && this.options.resumeKey) {
-                    this.rest.updateSession(this.options.resumeKey, this.options.resumeTimeout ?? 60);
+                    this.rest.updateSession(this.options.resumeKey, this.options.resumeTimeout ? 60);
                 }
                 {
                     break;
@@ -495,12 +495,12 @@ class Node {
             // no available nodes, so we can't move the players
         }
         this.vulkava.emit('error', this, new Error(`WebSocket closed abnormally with code ${code}.`));
-        if (this.retryAttempts > (this.options.maxRetryAttempts ?? 10))
+        if (this.retryAttempts > (this.options.maxRetryAttempts ? 10))
             return;
         if (this.retryAttempts === 0)
             this.connect();
         else
-            setTimeout(() => this.connect(), this.options.retryAttemptsInterval ?? 5000);
+            setTimeout(() => this.connect(), this.options.retryAttemptsInterval ? 5000);
     }
     upgrade(msg) {
         if (msg.headers['session-resumed'] === 'true') {

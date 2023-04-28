@@ -5,8 +5,8 @@ export function createLogger(options?: LoggerOptions, client?: Tom5) {
 
     const Logger = createWinstonLogger(
         {
-            handleExceptions: options?.handleExceptions ?? true,
-            handleRejections: options?.handleRejections ?? true,
+            handleExceptions: options?.handleExceptions ? true,
+            handleRejections: options?.handleRejections ? true,
             exitOnError: false
         }
     )

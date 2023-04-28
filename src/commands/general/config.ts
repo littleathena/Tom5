@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ApplicationCommandOptionType, ApplicationCommandType, ButtonBuilder, ButtonStyle, Channel, ComponentType, EmbedBuilder, GuildBasedChannel, Role } from "discord.js";
-import Command from "../../../classes/Command";
-import Tom5 from "../../../classes/Tom5";
+import Command from "../../classes/Command";
+import Tom5 from "../../classes/Tom5";
 import { Collection } from "discord.js";
 
 export class Comando extends Command {
@@ -26,9 +26,9 @@ export class Comando extends Command {
         this.client = client
         this.execute = async ({ ctx }) => {
 
-            if(!ctx.interaction?.isChatInputCommand()) return
+            if(!ctx.interaction!.isChatInputCommand()) return
 
-            const subCommand = ctx.interaction?.options.getSubcommand()
+            const subCommand = ctx.interaction.options.getSubcommand()
 
             switch(subCommand) {
                 case "parcerias": {
@@ -45,7 +45,7 @@ export class Comando extends Command {
                     var guildDoc = await this.client.db.getOne(
                         "guilds",
                         {
-                            _id: ctx.interaction?.guild?.id
+                            _id: ctx.interaction.guild?.id
                         }
                     )
 
@@ -60,7 +60,7 @@ export class Comando extends Command {
                     }
 
                     if(staffRoles.length > 0) {
-                        let roles: Array<Role> = staffRoles.map((r: string) => this.client.guilds.cache.get(ctx.interaction?.guildId!)?.roles.cache.get(r))
+                        let roles: Array<Role> = staffRoles.map((r: string) => this.client.guilds.cache.get(ctx.interaction!.guildId!)?.roles.cache.get(r))
 
                         staffRoles = roles.join(` `)
                     } else {
@@ -68,19 +68,19 @@ export class Comando extends Command {
                     }
 
                     if(partnersRole) {
-                        let role =ctx.interaction?.guild?.roles.cache.get(partnersRole)
+                        let role =ctx.interaction.guild?.roles.cache.get(partnersRole)
 
                         partnersRole = role
                     } else {
                         partnersRole = "\`Não configurado\`"
                     }
 
-                    const msg = await ctx.interaction?.reply(
+                    const msg = await ctx.interaction.reply(
                         {
                             embeds: [
                                 new EmbedBuilder()
                                 .setColor("#2a2d31")
-                                .setDescription(`**Olá ${ctx.interaction?.user}! Segue as intruções abaixo para configures o sistema de parcerias.**\n\n>>> <:tom5_icons_channel:1013544410677530786> - Canal de parcerias: ${partnersChannel}\n<:tom5_icons_store:1013545540950184047> - Cargos staffs responsáveis: ${staffRoles}\n<:tom5_icons_partner:1013546823857746001> - Cargo parceiros: ${partnersRole}`)
+                                .setDescription(`**Olá ${ctx.interaction.user}! Segue as intruções abaixo para configures o sistema de parcerias.**\n\n>>> <:tom5_icons_channel:1013544410677530786> - Canal de parcerias: ${partnersChannel}\n<:tom5_icons_store:1013545540950184047> - Cargos staffs responsáveis: ${staffRoles}\n<:tom5_icons_partner:1013546823857746001> - Cargo parceiros: ${partnersRole}`)
                             ],
                             components: [
                                 new ActionRowBuilder<ButtonBuilder>()
@@ -230,7 +230,7 @@ export class Comando extends Command {
 
                                     iMessage.delete()
 
-                                    // roles = roles.map(async r1 => await ctx.interaction?.guild?.roles.cache.find(await r1))
+                                    // roles = roles.map(async r1 => await ctx.interaction.guild?.roles.cache.find(await r1))
 
                                     // console.log(roles)
 

@@ -40,7 +40,7 @@ class DefaultQueue extends AbstractQueue_1.AbstractQueue {
      * @returns {Track | UnresolvedTrack | null} The next track in the queue or null if the queue is empty.
      */
     poll() {
-        return this.tracks.shift() ?? null;
+        return this.tracks.shift() ? null;
     }
     /**
      * Remove the next n tracks from the queue

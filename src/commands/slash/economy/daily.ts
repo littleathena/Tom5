@@ -25,7 +25,7 @@ export class Comando extends Command {
             const userDoc = await this.client.db.getOne(
                 "users",
                 {
-                    _id: ctx.interaction.user.id
+                    _id: ctx.interaction?.user.id
                 }
             )
 
@@ -33,7 +33,7 @@ export class Comando extends Command {
             let now = Date.now()
 
             if(now < nextClaim) {
-                return ctx.interaction.reply(
+                return ctx.interaction?.reply(
                     {
                         embeds: [
                             new EmbedBuilder()
@@ -49,7 +49,7 @@ export class Comando extends Command {
             await this.client.db.updateOne(
                 "users",
                 {
-                    _id: ctx.interaction.user.id
+                    _id: ctx.interaction?.user.id
                 },
                 {
                     $set: {
@@ -67,7 +67,7 @@ export class Comando extends Command {
                 }
             )
 
-            ctx.interaction.reply(
+            ctx.interaction?.reply(
                 {
                     embeds: [
                         new EmbedBuilder()

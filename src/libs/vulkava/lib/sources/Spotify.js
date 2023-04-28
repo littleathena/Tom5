@@ -128,7 +128,7 @@ class Spotify extends AbstractExternalSource_1.AbstractExternalSource {
         return {
             loadType: 'PLAYLIST_LOADED',
             playlistInfo: {
-                name: `${res.tracks[0].artists.find(a => a.id === id)?.name ?? ''} Top Tracks`,
+                name: `${res.tracks[0].artists.find(a => a.id === id)?.name ? ''} Top Tracks`,
                 duration: tracks.reduce((acc, curr) => acc + curr.duration, 0),
                 selectedTrack: 0
             },

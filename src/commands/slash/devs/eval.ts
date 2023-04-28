@@ -32,7 +32,7 @@ export class Comando extends Command {
         this.client = client
         this.execute = async ({ctx}) => {
 
-            var code = ctx.interaction.options.get("code", true).value?.toString()!
+            var code = ctx.interaction?.options.get("code", true).value?.toString()!
 
             try {
                 code = await eval(code)
@@ -44,7 +44,7 @@ export class Comando extends Command {
                 code = err.stack
             }
 
-            const msg = await ctx.interaction.reply(
+            const msg = await ctx.interaction?.reply(
                 {
                     embeds: [
                         new EmbedBuilder()
@@ -67,13 +67,13 @@ export class Comando extends Command {
                         )
                     ]
                 }
-            )
+            )!
 
             await msg.createMessageComponentCollector(
                 {
                     componentType: ComponentType.Button,
                     time: 1 * 60 * 1000,
-                    filter: (u) => u.user.id === ctx.interaction.user.id
+                    filter: (u) => u.user.id === ctx.interaction?.user.id
                 }
             ).on("collect", async (i) => {
 
@@ -81,7 +81,7 @@ export class Comando extends Command {
 
                 i.deferUpdate()
 
-                ctx.interaction.deleteReply()
+                ctx.interaction?.deleteReply()
 
             })
         }
