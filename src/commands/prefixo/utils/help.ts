@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ApplicationCommand, ApplicationCommandType, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder, StringSelectMenuBuilder } from "discord.js";
-import Command from "../../classes/Command";
-import Tom5 from "../../classes/Tom5";
+import Command from "../../../classes/Command";
+import Tom5 from "../../../classes/Tom5";
 
 export class Comando extends Command {
 
@@ -202,10 +202,12 @@ export class Comando extends Command {
 
                                         let devCmd: ApplicationCommand = devCommands[i]
 
-                                        let cmd1: any = this.client.utils.commands.get(devCmd.name)
+                                        let cmd1: any = this.client.utils.commands.slash.get(devCmd.name)
 
                                         msgDevCommands += `- </${devCmd.name}:${devCmd.id}> ${devCmd.description.replace("[🧪] ", "")} [\`${cmd1?.usage}\`]\n`
                                     }
+
+                                    msgDevCommands += `\n>>> **Legenda**\n- \`[]\` Parâmetros opcionais\n- \`()\` Parâmetros obrigatórios`
 
                                     i2.update(
                                         {
@@ -274,10 +276,12 @@ export class Comando extends Command {
 
                                         let ecoCmd: ApplicationCommand = ecoCommands[i]
 
-                                        let cmd1: any = this.client.utils.commands.get(ecoCmd.name)
+                                        let cmd1: any = this.client.utils.commands.slash.get(ecoCmd.name)
 
                                         msgEcoCommands += `- </${ecoCmd.name}:${ecoCmd.id}> ${ecoCmd.description.replace("[🪙] ", "")} [\`${cmd1?.usage}\`]\n`
                                     }
+
+                                    msgEcoCommands += `\n>>> **Legenda**\n- \`[]\` Parâmetros opcionais\n- \`()\` Parâmetros obrigatórios`
 
                                     i2.update(
                                         {
@@ -346,10 +350,12 @@ export class Comando extends Command {
 
                                         let musicCmd: ApplicationCommand = musicCommands[i]
 
-                                        let cmd2: any = this.client.utils.commands.get(musicCmd.name)
+                                        let cmd2: any = this.client.utils.commands.slash.get(musicCmd.name)
 
                                         msgMusicCommands += `- </${musicCmd.name}:${musicCmd.id}> ${musicCmd.description.replace("[🎵] ", "")} [\`${cmd2?.usage}\`]\n`
                                     }
+
+                                    msgMusicCommands += `\n>>> **Legenda**\n- \`[]\` Parâmetros opcionais\n- \`()\` Parâmetros obrigatórios`
 
                                     i2.update(
                                         {
@@ -418,10 +424,12 @@ export class Comando extends Command {
 
                                         let utilCmd: ApplicationCommand = utilCommands[i]
 
-                                        let cmd3: any = this.client.utils.commands.get(utilCmd.name)
+                                        let cmd3: any = this.client.utils.commands.slash.get(utilCmd.name)
 
                                         msgUtilCommands += `- </${utilCmd.name}:${utilCmd.id}> ${utilCmd.description.replace("[📒] ", "")} [\`${cmd3?.usage}\`]\n`
                                     }
+
+                                    msgUtilCommands += `\n>>> **Legenda**\n- \`[]\` Parâmetros opcionais\n- \`()\` Parâmetros obrigatórios`
 
                                     i2.update(
                                         {
@@ -571,7 +579,7 @@ export class Comando extends Command {
 
                                     let cmd = (await this.client.application?.commands.fetch())?.filter(a => a.name === c).map(a => a)[0]!
 
-                                    let cmd2: any = this.client.utils.commands.get(c)
+                                    let cmd2: any = this.client.utils.commands.slash.get(c)
 
                                     let desc = cmd.description.replace("[🧪] ", "")?.replace("[🎵] ", "")?.replace("[📒] ", "")
 

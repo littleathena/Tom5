@@ -20,23 +20,54 @@ export default class CommandsManager {
             "A debugar..."
         )
 
-        await this.client.application?.commands.set([])
+        // SLASH COMMANDS
 
-        const pastas = fs.readdirSync("./src/commands/")
+        await this.client.utils.commands.slash.forEach(async (c: any) => {
+            
+            let cmd = await this.client.application?.commands.cache.find(c.name)
+
+            if(!cmd) this.client.utils.commands.slash.delete(c.name)
+        })
+
+        const pastas = fs.readdirSync("./src/commands/slash")
 
         pastas.forEach(async (pasta) => {
 
-            const files = fs.readdirSync(`./src/commands/${pasta}/`)
+            const files = fs.readdirSync(`./src/commands/slash/${pasta}/`)
 
             files.forEach(async (arquivo) => {
 
-                const { Comando } = await import(`../commands/${pasta}/${arquivo}`)
+                const { Comando } = await import(`../commands/slash/${pasta}/${arquivo}`)
 
                 const comando = new Comando(this.client)
 
-                this.client.application?.commands.create(comando)
+                if(!this.client.application?.commands.cache.find(c => c.name === comando.name)) {
+                    await this.client.application?.commands.create(comando)
+                }
 
-                this.client.utils.commands.set(comando.name, comando)
+                this.client.utils.commands.slash.set(comando.name, comando)
+            })
+        })
+
+        // PREFIX COMMANDS
+
+        const pastasPrefix = fs.readdirSync("./src/commands/prefixo")
+
+        pastasPrefix.forEach(async (pasta) => {
+
+            const files = fs.readdirSync(`./src/commands/prefixo/${pasta}/`)
+
+            files.forEach(async (arquivo) => {
+
+                const { Comando } = await import(`../commands/prefixo/${pasta}/${arquivo}`)
+
+                const comando = new Comando(this.client)
+
+                if(!this.client.application?.commands.cache.find(c => c.name === comando.name)) {
+                    await this.client.application?.commands.create(comando)
+                }
+
+                this.client.utils.commands.prefix.set(comando.name, comando)
             })
         })
 

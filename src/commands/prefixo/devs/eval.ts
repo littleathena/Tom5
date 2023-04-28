@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ApplicationCommandOptionType, ApplicationCommandType, ButtonBuilder, ButtonStyle, ComponentType, EmbedBuilder } from "discord.js";
-import Command from "../../classes/Command"
-import Tom5 from "../../classes/Tom5";
+import Command from "../../../classes/Command"
+import Tom5 from "../../../classes/Tom5";
 import { inspect } from"util"
 
 export class Comando extends Command {

@@ -11,7 +11,10 @@ import DatabaseMethods from "./Database";
 export default class Tom5 extends Client {
     
     public utils: { 
-        commands: Collection<string, object>;
+        commands: {
+            prefix: Collection<string, object>;
+            slash: Collection<string, object>;
+        };
         events: Collection<string, object>; 
     };
     public managers!: {
@@ -26,6 +29,7 @@ export default class Tom5 extends Client {
         load: string; 
     };
     public devs: string[];
+    public prefix: string;
 
     constructor() {
         super(
@@ -77,7 +81,10 @@ export default class Tom5 extends Client {
             },
         );
         this.utils = {
-            commands: new Collection<string, object>(),
+            commands: {
+                prefix: new Collection<string, object>(),
+                slash: new Collection<string, object>()
+            },
             events: new Collection<string, object>()
         },
         this.managers = {
@@ -91,7 +98,8 @@ export default class Tom5 extends Client {
             "errado": "<:tom5_icons_Wrong:1013544051611533373>",
             "load": "<a:load:1036030535060967476>"
         },
-        this.devs = ["541030181616222218"]
+        this.devs = ["541030181616222218"],
+        this.prefix = "t."
     }
 
     async init(): Promise<any> {

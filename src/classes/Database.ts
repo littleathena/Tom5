@@ -1,7 +1,6 @@
 import clientModel from "../database/models/clientModel"
 import guildModel from "../database/models/guildModel"
 import userModel from "../database/models/userModel"
-
 export default class DatabaseMethods {
 
     constructor() {}

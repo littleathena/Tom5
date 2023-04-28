@@ -1,7 +1,7 @@
 import { ApplicationCommandType, EmbedBuilder } from "discord.js";
-import Command from "../../classes/Command";
-import Tom5 from "../../classes/Tom5";
-import userModel from "../../database/models/userModel";
+import Command from "../../../classes/Command";
+import Tom5 from "../../../classes/Tom5";
+import userModel from "../../../database/models/userModel";
 
 export class Comando extends Command {
 
@@ -46,16 +46,14 @@ export class Comando extends Command {
 
             let reward = Math.floor((Math.random() * 1000) + 400)
 
-            let res = await this.client.db.updateOne(
+            await this.client.db.updateOne(
                 "users",
                 {
                     _id: ctx.interaction.user.id
                 },
                 {
-                    $inc: {
-                        "economia.wallet": reward,
-                    },
                     $set: {
+                        "economia.wallet": userDoc.economia.wallet + reward,
                         "economia.daily.lastClaim": Date.now(),
                         "economia.daily.nextClaim": Date.now() + 86400000
                     },
@@ -74,7 +72,7 @@ export class Comando extends Command {
                     embeds: [
                         new EmbedBuilder()
                         .setColor("#2a2d31")
-                        .setDescription(`**(${this.client._emojis.certo}) Recebeste \`${reward}\` TomCoins! Volta <t:${~~((Date.now() + 86400000) / 1000)}:R>.**`)
+                        .setDescription(`**(${this.client._emojis.certo}) Recebeste \`${reward}\` <:tom5_icons_dollar:1013544459503423618> TomCoins! Volta <t:${~~((Date.now() + 86400000) / 1000)}:R>.**`)
                     ]
                 }
             )

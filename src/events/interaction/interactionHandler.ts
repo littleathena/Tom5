@@ -21,7 +21,7 @@ export class Evento extends Event<"interactionCreate"> {
 
             if(interaction.user.bot) return
 
-            const slashCommand: any = this.client.utils.commands.get(interaction.commandName)
+            const slashCommand: any = this.client.utils.commands.slash.get(interaction.commandName)
 
             if(slashCommand) {
 
