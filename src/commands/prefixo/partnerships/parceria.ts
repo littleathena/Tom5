@@ -24,7 +24,7 @@ export class Comando extends Command {
                         embeds: [
                             new EmbedBuilder()
                             .setColor("#2a2d31")
-                            .setDescription(`(${this.client._emojis.load}) Clique no botão abaixo para fazer uma parceria.`)
+                            .setDescription(`(${this.client._emojis.load}) Clique no botão abaixo para realizar uma parceria.`)
                         ],
                         components: [
                             new ActionRowBuilder<ButtonBuilder>()
@@ -50,7 +50,7 @@ export class Comando extends Command {
                         embeds: [
                             new EmbedBuilder()
                             .setColor("#2a2d31")
-                            .setDescription(`**Olá ${ctx.message.author}! Reparei que gostarias de fazer uma parceria comigo!**\n\n**Segue os passos abaixo para prosseguires**\n> - Clica no botão abaixo para iniciar o pedido de parceria.\n\n**Nota**\n>>> O pedido de parceria será enviado para o meu servidor de suporte e será analisado pela equipa do bot responsável pelo processamento destes pedidos.\n\nSerás notificado via Mensagem Privada e no canal específico no servidor de suporte se fores aceite ou reprovado.`)
+                            .setDescription(`**Olá ${ctx.message.author}, gostaria de realizar uma parceria com o Tom5?**\n\n**Veja abaixo para como prosseguir com seu pedido**\n> - Clique no botão abaixo para iniciar o seu pedido de parceria.\n\n**Nota**\n>>> O pedido de parceria será enviado para o meu servidor de suporte e será analisado por uma pessoa autozizada em nossa equipe para tal procedimento.\n\nVocê será notificado por meio desse canal e no canal específicado em nosso servidor de suporte no caso de aceitação ou reprovação.`)
                         ],
                         components: [
                             new ActionRowBuilder<ButtonBuilder>()
