@@ -245,7 +245,7 @@ export class Comando extends Command {
                                                                     id: "1013546693997891615",
                                                                     name: "tom5_icons_code"
                                                                 },
-                                                                default: true
+                                                                default: true  
                                                             },
                                                             {
                                                                 label: "Econommia",
@@ -254,6 +254,15 @@ export class Comando extends Command {
                                                                     animated: false,
                                                                     id: "1013544459503423618",
                                                                     name: "tom5_icons_dollar"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Gerais",
+                                                                value: "gen",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013545455898071100",
+                                                                    name: "tom5_icons_globe"
                                                                 }
                                                             },
                                                             {
@@ -318,7 +327,7 @@ export class Comando extends Command {
                                                                     animated: false,
                                                                     id: "1013546693997891615",
                                                                     name: "tom5_icons_code"
-                                                                }
+                                                                } 
                                                             },
                                                             {
                                                                 label: "Econommia",
@@ -329,6 +338,15 @@ export class Comando extends Command {
                                                                     name: "tom5_icons_dollar"
                                                                 },
                                                                 default: true
+                                                            },
+                                                            {
+                                                                label: "Gerais",
+                                                                value: "gen",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013545455898071100",
+                                                                    name: "tom5_icons_globe"
+                                                                }
                                                             },
                                                             {
                                                                 label: "Música",
@@ -392,7 +410,7 @@ export class Comando extends Command {
                                                                     animated: false,
                                                                     id: "1013546693997891615",
                                                                     name: "tom5_icons_code"
-                                                                }
+                                                                } 
                                                             },
                                                             {
                                                                 label: "Econommia",
@@ -401,6 +419,15 @@ export class Comando extends Command {
                                                                     animated: false,
                                                                     id: "1013544459503423618",
                                                                     name: "tom5_icons_dollar"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Gerais",
+                                                                value: "gen",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013545455898071100",
+                                                                    name: "tom5_icons_globe"
                                                                 },
                                                                 default: true
                                                             },
@@ -466,7 +493,7 @@ export class Comando extends Command {
                                                                     animated: false,
                                                                     id: "1013546693997891615",
                                                                     name: "tom5_icons_code"
-                                                                }
+                                                                } 
                                                             },
                                                             {
                                                                 label: "Econommia",
@@ -475,6 +502,15 @@ export class Comando extends Command {
                                                                     animated: false,
                                                                     id: "1013544459503423618",
                                                                     name: "tom5_icons_dollar"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Gerais",
+                                                                value: "gen",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013545455898071100",
+                                                                    name: "tom5_icons_globe"
                                                                 }
                                                             },
                                                             {
@@ -540,7 +576,7 @@ export class Comando extends Command {
                                                                     animated: false,
                                                                     id: "1013546693997891615",
                                                                     name: "tom5_icons_code"
-                                                                }
+                                                                } 
                                                             },
                                                             {
                                                                 label: "Econommia",
@@ -549,6 +585,15 @@ export class Comando extends Command {
                                                                     animated: false,
                                                                     id: "1013544459503423618",
                                                                     name: "tom5_icons_dollar"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Gerais",
+                                                                value: "gen",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013545455898071100",
+                                                                    name: "tom5_icons_globe"
                                                                 }
                                                             },
                                                             {
@@ -605,7 +650,7 @@ export class Comando extends Command {
                             {
                                 name: "Parcerias",
                                 description: "Parcerias feitas com o Tom5 e/ou o servidor do seu criador (TomG). Sistema disponível também localmente para servidores.",
-                                commands: [],
+                                commands: ["config", "parceria"],
                                 infosAdd: "No caso de parcerias com o bot, tudo o que precisa fazer para entrar em contacto com a equipa de parcerias é enviar mensagem no privado do Tom5 escrito **\`t.parceria\`**, e seguir as indicações do bot."
                             }
                         ]
@@ -671,7 +716,9 @@ export class Comando extends Command {
 
                                     let cmd2: any = this.client.utils.commands.slash.get(c)
 
-                                    let desc = cmd.description.replace("[🧪] ", "")?.replace("[🎵] ", "")?.replace("[📒] ", "")
+                                    // "[🧪]", "[🪙]", "[🎈]", "[🎵]", "[📒]"
+
+                                    let desc = cmd.description.replace("[🧪] ", "")?.replace("[🪙]", "")?.replace("[🎈]", "")?.replace("[🎵] ", "")?.replace("[📒] ", "")
 
                                     string += `> - </${cmd.name}:${cmd.id}> ${desc} [\`${cmd2.usage}\`]\n`
                                 }
