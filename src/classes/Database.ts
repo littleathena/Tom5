@@ -63,15 +63,24 @@ export default class DatabaseMethods {
         }
 
         if(!res.clients && modelType === "clients") {
-            res.clients = await new clientModel(filter).save()
+            let newModel: any = await new clientModel(filter).save()
+            newModel = newModel.updateOne(newSchema)
+
+            res.clients = newModel
         }
 
         if(!res.guilds && modelType === "guilds")  {
-            res.guilds = await new guildModel(newSchema).save()
+            let newModel: any = await new guildModel(filter).save()
+            newModel = newModel.updateOne(newSchema)
+
+            res.guilds = newModel
         }
 
         if(!res.users && modelType === "users") {
-            res.users = await new userModel(newSchema).save()
+            let newModel: any = await new userModel(filter).save()
+            newModel = newModel.updateOne(newSchema)
+
+            res.users = newModel
         }
 
         return res[modelType]

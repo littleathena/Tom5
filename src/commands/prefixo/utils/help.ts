@@ -11,8 +11,8 @@ export class Comando extends Command {
             {
                 name: "help",
                 description: "[📒] Comando de ajuda",
-                type: ApplicationCommandType.ChatInput,
-                usage: "/help",
+                aliases: ["ajuda"],
+                usage: "t.help",
                 devOnly: false,
                 userPermissions: ["SendMessages"],
                 botPermissions: ["SendMessages", "EmbedLinks"]
@@ -23,9 +23,9 @@ export class Comando extends Command {
 
             const comandos = (await this.client.application?.commands.fetch()!).map(c => c)
 
-            const categorias = ["[🧪]", "[🪙]", "[🎵]", "[📒]"]
+            const categorias = ["[🧪]", "[🪙]", "[🎈]", "[🎵]", "[📒]"]
 
-            var devCommands: Array<any>, ecoCommands: Array<any>, musicCommands: Array<any>, utilCommands: Array<any>;
+            var devCommands: Array<any>, ecoCommands: Array<any>, genCommands: Array<any>, musicCommands: Array<any>, utilCommands: Array<any>;
 
             for(let categoria of categorias) {
 
@@ -41,6 +41,14 @@ export class Comando extends Command {
                     case "[🪙]": {
 
                         ecoCommands = comandos.filter(c => c.description.startsWith("[🪙]"))
+
+                        break
+
+                    }
+
+                    case "[🎈]": {
+
+                        genCommands = comandos.filter(c => c.description.startsWith("[🎈]"))
 
                         break
 
@@ -62,12 +70,12 @@ export class Comando extends Command {
                 }
             }
 
-            var msg = await ctx.interaction?.reply(
+            var msg = await ctx.message?.reply(
                 {
                     embeds: [
                         new EmbedBuilder()
                         .setColor("#2a2d31")
-                        .setDescription(`**Olá ${ctx.interaction?.user}! Precisas de ajuda?**\n\n> Seleciona abaixo o tipo de ajuda que desjas receber.`)
+                        .setDescription(`**Olá ${ctx.message?.author}! Precisas de ajuda?**\n\n> Seleciona abaixo o tipo de ajuda que desjas receber.`)
                     ],
                     components: [
                         new ActionRowBuilder<ButtonBuilder>()
@@ -96,8 +104,7 @@ export class Comando extends Command {
                             )
                             .setStyle(ButtonStyle.Secondary)
                         )
-                    ],
-                    fetchReply: true
+                    ]
                 }
             )!
 
@@ -105,7 +112,7 @@ export class Comando extends Command {
                 {
                     componentType: ComponentType.Button,
                     time: 1 * 60 * 1000,
-                    filter: (u) => u.user.id === ctx.interaction?.user.id
+                    filter: (u) => u.user.id === ctx.message?.author.id
                 }
             ).on("collect", async (i) => {
 
@@ -160,6 +167,15 @@ export class Comando extends Command {
                                                     }
                                                 },
                                                 {
+                                                    label: "Gerais",
+                                                    value: "gen",
+                                                    emoji: {
+                                                        animated: false,
+                                                        id: "1013545455898071100",
+                                                        name: "tom5_icons_globe"
+                                                    }
+                                                },
+                                                {
                                                     label: "Música",
                                                     value: "music",
                                                     emoji: {
@@ -188,7 +204,7 @@ export class Comando extends Command {
                             {
                                 componentType: ComponentType.StringSelect,
                                 time: 10 * 60 * 1000,
-                                filter: (u) => u.user.id === ctx.interaction?.user.id
+                                filter: (u) => u.user.id === ctx.message?.author.id
                             }
                         ).on("collect", async (i2) => {
 
@@ -286,6 +302,80 @@ export class Comando extends Command {
                                     i2.update(
                                         {
                                             content: msgEcoCommands,
+                                            embeds: [],
+                                            components: [
+                                                new ActionRowBuilder<StringSelectMenuBuilder>()
+                                                .addComponents(
+                                                    new StringSelectMenuBuilder()
+                                                    .setCustomId("help_commands_menu")
+                                                    .setPlaceholder("Selecionar Categoria")
+                                                    .setOptions(
+                                                        [
+                                                            {
+                                                                label: "Desenvolvedores",
+                                                                value: "devs",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013546693997891615",
+                                                                    name: "tom5_icons_code"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Econommia",
+                                                                value: "eco",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013544459503423618",
+                                                                    name: "tom5_icons_dollar"
+                                                                },
+                                                                default: true
+                                                            },
+                                                            {
+                                                                label: "Música",
+                                                                value: "music",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013546723018285199",
+                                                                    name: "tom5_icons_music"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Úteis",
+                                                                value: "utils",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013544466398855258",
+                                                                    name: "tom5_icons_file"
+                                                                }
+                                                            }
+                                                        ]
+                                                    )
+                                                )
+                                            ]
+                                        }
+                                    )
+
+                                    break
+                                }
+
+                                case "gen": {
+
+                                    var msgGenCommands = ""
+
+                                    for(let i = 0; i < genCommands.length; i++) {
+
+                                        let genCmd: ApplicationCommand = genCommands[i]
+
+                                        let cmd1: any = this.client.utils.commands.slash.get(genCmd.name)
+
+                                        msgGenCommands += `- </${genCmd.name}:${genCmd.id}> ${genCmd.description.replace("[🎈] ", "")} [\`${cmd1?.usage}\`]\n`
+                                    }
+
+                                    msgGenCommands += `\n>>> **Legenda**\n- \`[]\` Parâmetros opcionais\n- \`()\` Parâmetros obrigatórios`
+
+                                    i2.update(
+                                        {
+                                            content: msgGenCommands,
                                             embeds: [],
                                             components: [
                                                 new ActionRowBuilder<StringSelectMenuBuilder>()
@@ -514,9 +604,9 @@ export class Comando extends Command {
                             },
                             {
                                 name: "Parcerias",
-                                description: "Parcerias feitas com o Tom5 e/ou o servidor do seu criador (TomG).",
+                                description: "Parcerias feitas com o Tom5 e/ou o servidor do seu criador (TomG). Sistema disponível também localmente para servidores.",
                                 commands: [],
-                                infosAdd: "Tudo o que precisa fazer para entrar em contacto com a equipa de parcerias é enviar mensagem no privado do Tom5 escrito **\`t.parceria\`**, e seguir as indicações do bot."
+                                infosAdd: "No caso de parcerias com o bot, tudo o que precisa fazer para entrar em contacto com a equipa de parcerias é enviar mensagem no privado do Tom5 escrito **\`t.parceria\`**, e seguir as indicações do bot."
                             }
                         ]
 
@@ -567,7 +657,7 @@ export class Comando extends Command {
                             {
                                 componentType: ComponentType.StringSelect,
                                 time: 10 * 60 * 1000,
-                                filter: (u) => u.user.id === ctx.interaction?.user.id
+                                filter: (u) => u.user.id === ctx.message?.author.id
                             },
                         ).on("collect", async (i) => {
 

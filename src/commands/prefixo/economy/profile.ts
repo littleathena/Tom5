@@ -12,16 +12,7 @@ export class Comando extends Command {
             {
                 name: "perfil",
                 description: "[🪙] Veja o seu perfil",
-                type: ApplicationCommandType.ChatInput,
-                usage: "/perfil [id]",
-                options: [
-                    {
-                        name: "user_id",
-                        description: "Id do usuário para ver o perfil",
-                        type: ApplicationCommandOptionType.User,
-                        required: false
-                    }
-                ]
+                usage: "t.perfil [id]",
             }
         )
         this.client = client
@@ -40,7 +31,7 @@ export class Comando extends Command {
                 return string
             }
 
-            let user = ctx.interaction?.options.getUser("user_id") || ctx.interaction?.user!
+            let user = ctx.message?.mentions.members?.first() || ctx.message?.guild?.members.cache.get(ctx.args![0]) || ctx.message?.member!
 
             let Canva = canvas.createCanvas(850, 1200)
             let ctxCanva = Canva.getContext("2d")
@@ -48,7 +39,7 @@ export class Comando extends Command {
             const backgroundProfile = await canvas.loadImage("./src/assets/images/default_background_profile.png")
             ctxCanva.drawImage(backgroundProfile, 0, 0)
 
-            const username = user.tag
+            const username = user.user.tag
             ctxCanva.textAlign = "left"
             ctxCanva.font = '65px "Franklin Gothic"'
             ctxCanva.fillStyle = "#fff"
@@ -116,8 +107,8 @@ export class Comando extends Command {
                         new AttachmentBuilder(
                             Canva.toBuffer(), 
                             { 
-                                name: `profile_${user.username}.png`,
-                                description: `Perfil de ${user.tag}`
+                                name: `profile_${user.user.username}.png`,
+                                description: `Perfil de ${user.user.tag}`
                             }
                         )
                     ]

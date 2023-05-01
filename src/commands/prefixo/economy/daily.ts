@@ -12,8 +12,7 @@ export class Comando extends Command {
             {
                 name: "daily",
                 description: "[🪙] Colete a sua recompensa diária",
-                type: ApplicationCommandType.ChatInput,
-                usage: "/daily",
+                usage: "t.daily",
                 botPermissions: [
                     "SendMessages"
                 ]
@@ -25,7 +24,7 @@ export class Comando extends Command {
             const userDoc = await this.client.db.getOne(
                 "users",
                 {
-                    _id: ctx.interaction?.user.id
+                    _id: ctx.message?.author.id
                 }
             )
 
@@ -33,7 +32,7 @@ export class Comando extends Command {
             let now = Date.now()
 
             if(now < nextClaim) {
-                return ctx.interaction?.reply(
+                return ctx.message?.reply(
                     {
                         embeds: [
                             new EmbedBuilder()
@@ -49,7 +48,7 @@ export class Comando extends Command {
             await this.client.db.updateOne(
                 "users",
                 {
-                    _id: ctx.interaction?.user.id
+                    _id: ctx.message?.author.id
                 },
                 {
                     $set: {
@@ -67,7 +66,7 @@ export class Comando extends Command {
                 }
             )
 
-            ctx.interaction?.reply(
+            ctx.message?.reply(
                 {
                     embeds: [
                         new EmbedBuilder()

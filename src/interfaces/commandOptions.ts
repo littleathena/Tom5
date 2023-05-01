@@ -10,4 +10,5 @@ export default interface CommandOptions {
     devOnly?: boolean,
     userPermissions?: Array<keyof PermissionFlags>,
     botPermissions?: Array<keyof PermissionFlags>,
+    dmPerm?: boolean
 }

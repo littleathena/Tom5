@@ -11,8 +11,8 @@ export class Comando extends Command {
             {
                 name: "timers",
                 description: "[📒] Veja os seus timers",
-                type: ApplicationCommandType.ChatInput,
-                usage: "/timers",
+                aliases: ["schedule"],
+                usage: "t.timers",
                 devOnly: false,
                 userPermissions: ["SendMessages"],
                 botPermissions: ["SendMessages", "EmbedLinks"]
@@ -24,7 +24,7 @@ export class Comando extends Command {
             const userDoc = await this.client.db.getOne(
                 "users",
                 {
-                    _id: ctx.interaction?.user.id
+                    _id: ctx.message?.author.id
                 }
             )
 
@@ -37,7 +37,7 @@ export class Comando extends Command {
                     embeds: [
                         new EmbedBuilder()
                         .setColor("#2a2d31")
-                        .setDescription(`**Olá ${ctx.interaction?.user}. Aqui estão os teus timers**`)
+                        .setDescription(`**Olá ${ctx.message?.author}. Aqui estão os teus timers**`)
                         .addFields(
                             {
                                 name: "Daily",

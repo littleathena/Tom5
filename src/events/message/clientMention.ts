@@ -17,14 +17,13 @@ export class Evento extends Event<"messageCreate"> {
         this.execute = async (message) => {
 
             if(message.author.bot) return
-            if(!message.channel.isTextBased()) return
 
             if(message.content !== `<@${this.client.user?.id}>`) return
 
 
             message.reply(
                 {
-                    content: `**>>> (<:tom5_icons_wave:1014591822057713674>) Olá ${message.author}, precisas de ajuda?\n(<:tom5_icons_store:1013545540950184047>) O meu prefixo é \`/\`\n(<:tom5_icons_info:1013545468933972140>) Comando de ajuda: </help:1094936402615095396>\n(<:tom5_icons_question:1013546739170558135>) Mais informações em </botinfo:123456>**`,
+                    content: `**>>> (<:tom5_icons_wave:1014591822057713674>) Olá ${message.author}, precisas de ajuda?\n(<:tom5_icons_store:1013545540950184047>) O meu prefixo é \`t.\` ou \`/\`\n(<:tom5_icons_info:1013545468933972140>) Comando de ajuda: </help:1094936402615095396>\n(<:tom5_icons_question:1013546739170558135>) Mais informações em </botinfo:123456>**`,
                     components: [
                         new ActionRowBuilder<ButtonBuilder>()
                         .addComponents(

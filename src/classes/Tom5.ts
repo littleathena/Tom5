@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, Options, ActivityType, Collection
+import { Client, GatewayIntentBits, Options, ActivityType, Collection, Partials
  } from "discord.js";
 import CommandsManager from "../managers/commandsManager";
 import EventsManager from "../managers/eventsManager";
@@ -15,7 +15,8 @@ export default class Tom5 extends Client {
             prefix: Collection<string, object>;
             slash: Collection<string, object>;
         };
-        events: Collection<string, object>; 
+        events: Collection<string, object>;
+        aliases: Collection<string, object>;
     };
     public managers!: {
         commandsManager: CommandsManager;
@@ -36,16 +37,16 @@ export default class Tom5 extends Client {
             {
                 makeCache: Options.cacheWithLimits(
                     {
-                        ApplicationCommandManager: 0,
+                        ApplicationCommandManager: Infinity,
                         BaseGuildEmojiManager: 0,
                         GuildMemberManager: Infinity,
                         GuildStickerManager: 0,
                         GuildScheduledEventManager: 0,
-                        MessageManager: 0,
+                        MessageManager: Infinity,
                         StageInstanceManager: 0,
                         ThreadManager: 0,
                         ThreadMemberManager: 0,
-                        UserManager: 0
+                        UserManager: Infinity,
                     }
                 ),
                 intents: [
@@ -69,6 +70,10 @@ export default class Tom5 extends Client {
                     GatewayIntentBits.Guilds,
                     GatewayIntentBits.MessageContent
                 ],
+                partials: [
+                    Partials.Channel,
+                    Partials.Message
+                ],
                 presence: {
                     status: process.env.ENVIROMENT == "dev" ? "idle" : "online",
                     activities: [
@@ -85,7 +90,8 @@ export default class Tom5 extends Client {
                 prefix: new Collection<string, object>(),
                 slash: new Collection<string, object>()
             },
-            events: new Collection<string, object>()
+            events: new Collection<string, object>(),
+            aliases: new Collection<string, object>()
         },
         this.managers = {
             commandsManager: new CommandsManager(this),

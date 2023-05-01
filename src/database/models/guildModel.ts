@@ -18,6 +18,14 @@ const schema = new Schema(
             partnersRole: {
                 type: String,
                 default: null
+            },
+            pingRole: {
+                type: String,
+                default: null
+            },
+            partners: {
+                type: Array,
+                default: null
             }
         }
     }

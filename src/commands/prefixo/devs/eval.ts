@@ -14,16 +14,8 @@ export class Comando extends Command {
             {
                 name: "eval",
                 description: "[🧪] Comando para executar códigos",
-                type: ApplicationCommandType.ChatInput,
-                usage: "/eval <code>",
-                options: [
-                    {
-                        name: "code",
-                        description: "Código a executar",
-                        type: ApplicationCommandOptionType.String,
-                        required: true
-                    }
-                ],
+                usage: "t.eval <code>",
+                aliases: ["e"],
                 devOnly: true,
                 userPermissions: ["SendMessages", "UseApplicationCommands"],
                 botPermissions: ["SendMessages", "EmbedLinks", "ManageMessages"]                
@@ -32,7 +24,7 @@ export class Comando extends Command {
         this.client = client
         this.execute = async ({ctx}) => {
 
-            var code = ctx.interaction?.options.get("code", true).value?.toString()!
+            var code = ctx.args?.join(` `)!
 
             try {
                 code = await eval(code)
@@ -44,7 +36,7 @@ export class Comando extends Command {
                 code = err.stack
             }
 
-            const msg = await ctx.interaction?.reply(
+            const msg = await ctx.message?.reply(
                 {
                     embeds: [
                         new EmbedBuilder()
@@ -73,7 +65,7 @@ export class Comando extends Command {
                 {
                     componentType: ComponentType.Button,
                     time: 1 * 60 * 1000,
-                    filter: (u) => u.user.id === ctx.interaction?.user.id
+                    filter: (u) => u.user.id === ctx.message?.author.id
                 }
             ).on("collect", async (i) => {
 
@@ -81,7 +73,7 @@ export class Comando extends Command {
 
                 i.deferUpdate()
 
-                ctx.interaction?.deleteReply()
+                ctx.message?.delete()
 
             })
         }

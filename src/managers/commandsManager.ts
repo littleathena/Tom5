@@ -63,11 +63,13 @@ export default class CommandsManager {
 
                 const comando = new Comando(this.client)
 
-                if(!this.client.application?.commands.cache.find(c => c.name === comando.name)) {
-                    await this.client.application?.commands.create(comando)
-                }
-
                 this.client.utils.commands.prefix.set(comando.name, comando)
+
+                if(comando.aliases) {
+                    for(let alias of comando.aliases) {
+                        this.client.utils.aliases.set(alias, comando)
+                    }
+                }
             })
         })
 

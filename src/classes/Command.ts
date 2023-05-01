@@ -13,6 +13,7 @@ export default class Command implements CommandOptions {
     devOnly: boolean | undefined;
     userPermissions?: Array<keyof PermissionFlags>;
     botPermissions?: Array<keyof PermissionFlags>;
+    dmPerm?: boolean | undefined;
     execute: (options: ExecuteOptions) => any;
     
     constructor(cmdOptions: CommandOptions)  {
@@ -25,6 +26,7 @@ export default class Command implements CommandOptions {
         this.devOnly = cmdOptions.devOnly,
         this.userPermissions = cmdOptions.userPermissions,
         this.botPermissions = cmdOptions.botPermissions
+        this.dmPerm = cmdOptions.dmPerm
         this.execute = (options: ExecuteOptions) => {}
     }
 }
