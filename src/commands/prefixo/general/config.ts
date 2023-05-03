@@ -21,6 +21,17 @@ export class Comando extends Command {
             const subCommand = ctx.args![0]
 
             switch(subCommand) {
+
+                default: {
+                    ctx.message?.reply(
+                        {
+                            content: `(${this.client._emojis.errado}) Indique o sub comando: \`parcerias\` / \`ticket\`.`
+                        }
+                    )
+
+                    break
+                }
+
                 case "parcerias": {
 
                     var guildDoc = await this.client.db.getOne(
@@ -537,6 +548,11 @@ export class Comando extends Command {
                             }
                         }
                     })
+                }
+
+                case "tickets": {
+                    
+                    break
                 }
             }
         }

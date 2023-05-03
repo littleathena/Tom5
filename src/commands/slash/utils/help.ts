@@ -23,9 +23,9 @@ export class Comando extends Command {
 
             const comandos = (await this.client.application?.commands.fetch()!).map(c => c)
 
-            const categorias = ["[🧪]", "[🪙]", "[🎵]", "[📒]"]
+            const categorias = ["[🧪]", "[🪙]", "[🎈]", "[🎵]", "[🤝]", "[📒]"]
 
-            var devCommands: Array<any>, ecoCommands: Array<any>, musicCommands: Array<any>, utilCommands: Array<any>;
+            var devCommands: Array<any>, ecoCommands: Array<any>, genCommands: Array<any>, musicCommands: Array<any>, partnerCommands: Array<any>, utilCommands: Array<any>;
 
             for(let categoria of categorias) {
 
@@ -46,9 +46,23 @@ export class Comando extends Command {
 
                     }
 
+                    case "[🎈]": {
+
+                        genCommands = comandos.filter(c => c.description.startsWith("[🎈]"))
+
+                        break
+
+                    }
+
                     case "[🎵]": {
 
                         musicCommands = comandos.filter(c => c.description.startsWith("[🎵]"))
+
+                        break
+                    }
+
+                    case "[🤝]": {
+                        partnerCommands = comandos.filter(c => c.description.startsWith("[🤝]"))
 
                         break
                     }
@@ -96,8 +110,7 @@ export class Comando extends Command {
                             )
                             .setStyle(ButtonStyle.Secondary)
                         )
-                    ],
-                    fetchReply: true
+                    ]
                 }
             )!
 
@@ -160,12 +173,31 @@ export class Comando extends Command {
                                                     }
                                                 },
                                                 {
+                                                    label: "Gerais",
+                                                    value: "gen",
+                                                    emoji: {
+                                                        animated: false,
+                                                        id: "1013545455898071100",
+                                                        name: "tom5_icons_globe"
+                                                    }
+                                                },
+                                                {
                                                     label: "Música",
                                                     value: "music",
                                                     emoji: {
                                                         animated: false,
                                                         id: "1013546723018285199",
                                                         name: "tom5_icons_music"
+                                                    }
+                                                },
+                                                {
+                                                    label: "Parcerias",
+                                                    value: "parcerias",
+                                                    emoji: 
+                                                    {
+                                                        animated: false,
+                                                        id: "1013546823857746001",
+                                                        name: "tom5_icons_partner"
                                                     }
                                                 },
                                                 {
@@ -229,7 +261,7 @@ export class Comando extends Command {
                                                                     id: "1013546693997891615",
                                                                     name: "tom5_icons_code"
                                                                 },
-                                                                default: true
+                                                                default: true  
                                                             },
                                                             {
                                                                 label: "Econommia",
@@ -241,12 +273,31 @@ export class Comando extends Command {
                                                                 }
                                                             },
                                                             {
+                                                                label: "Gerais",
+                                                                value: "gen",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013545455898071100",
+                                                                    name: "tom5_icons_globe"
+                                                                }
+                                                            },
+                                                            {
                                                                 label: "Música",
                                                                 value: "music",
                                                                 emoji: {
                                                                     animated: false,
                                                                     id: "1013546723018285199",
                                                                     name: "tom5_icons_music"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Parcerias",
+                                                                value: "parcerias",
+                                                                emoji: 
+                                                                {
+                                                                    animated: false,
+                                                                    id: "1013546823857746001",
+                                                                    name: "tom5_icons_partner"
                                                                 }
                                                             },
                                                             {
@@ -302,7 +353,7 @@ export class Comando extends Command {
                                                                     animated: false,
                                                                     id: "1013546693997891615",
                                                                     name: "tom5_icons_code"
-                                                                }
+                                                                } 
                                                             },
                                                             {
                                                                 label: "Econommia",
@@ -315,12 +366,124 @@ export class Comando extends Command {
                                                                 default: true
                                                             },
                                                             {
+                                                                label: "Gerais",
+                                                                value: "gen",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013545455898071100",
+                                                                    name: "tom5_icons_globe"
+                                                                }
+                                                            },
+                                                            {
                                                                 label: "Música",
                                                                 value: "music",
                                                                 emoji: {
                                                                     animated: false,
                                                                     id: "1013546723018285199",
                                                                     name: "tom5_icons_music"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Parcerias",
+                                                                value: "parcerias",
+                                                                emoji: 
+                                                                {
+                                                                    animated: false,
+                                                                    id: "1013546823857746001",
+                                                                    name: "tom5_icons_partner"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Úteis",
+                                                                value: "utils",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013544466398855258",
+                                                                    name: "tom5_icons_file"
+                                                                }
+                                                            }
+                                                        ]
+                                                    )
+                                                )
+                                            ]
+                                        }
+                                    )
+
+                                    break
+                                }
+
+                                case "gen": {
+
+                                    var msgGenCommands = ""
+
+                                    for(let i = 0; i < genCommands.length; i++) {
+
+                                        let genCmd: ApplicationCommand = genCommands[i]
+
+                                        let cmd1: any = this.client.utils.commands.slash.get(genCmd.name)
+
+                                        msgGenCommands += `- </${genCmd.name}:${genCmd.id}> ${genCmd.description.replace("[🎈] ", "")} [\`${cmd1?.usage}\`]\n`
+                                    }
+
+                                    msgGenCommands += `\n>>> **Legenda**\n- \`[]\` Parâmetros opcionais\n- \`()\` Parâmetros obrigatórios`
+
+                                    i2.update(
+                                        {
+                                            content: msgGenCommands,
+                                            embeds: [],
+                                            components: [
+                                                new ActionRowBuilder<StringSelectMenuBuilder>()
+                                                .addComponents(
+                                                    new StringSelectMenuBuilder()
+                                                    .setCustomId("help_commands_menu")
+                                                    .setPlaceholder("Selecionar Categoria")
+                                                    .setOptions(
+                                                        [
+                                                            {
+                                                                label: "Desenvolvedores",
+                                                                value: "devs",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013546693997891615",
+                                                                    name: "tom5_icons_code"
+                                                                } 
+                                                            },
+                                                            {
+                                                                label: "Econommia",
+                                                                value: "eco",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013544459503423618",
+                                                                    name: "tom5_icons_dollar"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Gerais",
+                                                                value: "gen",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013545455898071100",
+                                                                    name: "tom5_icons_globe"
+                                                                },
+                                                                default: true
+                                                            },
+                                                            {
+                                                                label: "Música",
+                                                                value: "music",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013546723018285199",
+                                                                    name: "tom5_icons_music"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Parcerias",
+                                                                value: "parcerias",
+                                                                emoji: 
+                                                                {
+                                                                    animated: false,
+                                                                    id: "1013546823857746001",
+                                                                    name: "tom5_icons_partner"
                                                                 }
                                                             },
                                                             {
@@ -376,7 +539,7 @@ export class Comando extends Command {
                                                                     animated: false,
                                                                     id: "1013546693997891615",
                                                                     name: "tom5_icons_code"
-                                                                }
+                                                                } 
                                                             },
                                                             {
                                                                 label: "Econommia",
@@ -388,12 +551,124 @@ export class Comando extends Command {
                                                                 }
                                                             },
                                                             {
+                                                                label: "Gerais",
+                                                                value: "gen",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013545455898071100",
+                                                                    name: "tom5_icons_globe"
+                                                                }
+                                                            },
+                                                            {
                                                                 label: "Música",
                                                                 value: "music",
                                                                 emoji: {
                                                                     animated: false,
                                                                     id: "1013546723018285199",
                                                                     name: "tom5_icons_music"
+                                                                },
+                                                                default: true
+                                                            },
+                                                            {
+                                                                label: "Parcerias",
+                                                                value: "parcerias",
+                                                                emoji: 
+                                                                {
+                                                                    animated: false,
+                                                                    id: "1013546823857746001",
+                                                                    name: "tom5_icons_partner"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Úteis",
+                                                                value: "utils",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013544466398855258",
+                                                                    name: "tom5_icons_file"
+                                                                }
+                                                            }
+                                                        ]
+                                                    )
+                                                )
+                                            ]
+                                        }
+                                    )
+
+                                    break
+                                }
+
+                                case "parcerias": {
+
+                                    var msgParceCommands = ""
+
+                                    for(let i = 0; i < partnerCommands.length; i++) {
+
+                                        let parceCmd: ApplicationCommand = partnerCommands[i]
+
+                                        let cmd2: any = this.client.utils.commands.slash.get(parceCmd.name)
+
+                                        msgParceCommands += `- </${parceCmd.name}:${parceCmd.id}> ${parceCmd.description.replace("[🤝] ", "")} [\`${cmd2?.usage}\`]\n`
+                                    }
+
+                                    msgParceCommands += `\n>>> **Legenda**\n- \`[]\` Parâmetros opcionais\n- \`()\` Parâmetros obrigatórios`
+
+                                    i2.update(
+                                        {
+                                            content: msgParceCommands,
+                                            embeds: [],
+                                            components: [
+                                                new ActionRowBuilder<StringSelectMenuBuilder>()
+                                                .addComponents(
+                                                    new StringSelectMenuBuilder()
+                                                    .setCustomId("help_commands_menu")
+                                                    .setPlaceholder("Selecionar Categoria")
+                                                    .setOptions(
+                                                        [
+                                                            {
+                                                                label: "Desenvolvedores",
+                                                                value: "devs",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013546693997891615",
+                                                                    name: "tom5_icons_code"
+                                                                } 
+                                                            },
+                                                            {
+                                                                label: "Econommia",
+                                                                value: "eco",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013544459503423618",
+                                                                    name: "tom5_icons_dollar"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Gerais",
+                                                                value: "gen",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013545455898071100",
+                                                                    name: "tom5_icons_globe"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Música",
+                                                                value: "music",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013546723018285199",
+                                                                    name: "tom5_icons_music"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Parcerias",
+                                                                value: "parcerias",
+                                                                emoji: 
+                                                                {
+                                                                    animated: false,
+                                                                    id: "1013546823857746001",
+                                                                    name: "tom5_icons_partner"
                                                                 },
                                                                 default: true
                                                             },
@@ -450,7 +725,7 @@ export class Comando extends Command {
                                                                     animated: false,
                                                                     id: "1013546693997891615",
                                                                     name: "tom5_icons_code"
-                                                                }
+                                                                } 
                                                             },
                                                             {
                                                                 label: "Econommia",
@@ -462,12 +737,31 @@ export class Comando extends Command {
                                                                 }
                                                             },
                                                             {
+                                                                label: "Gerais",
+                                                                value: "gen",
+                                                                emoji: {
+                                                                    animated: false,
+                                                                    id: "1013545455898071100",
+                                                                    name: "tom5_icons_globe"
+                                                                }
+                                                            },
+                                                            {
                                                                 label: "Música",
                                                                 value: "music",
                                                                 emoji: {
                                                                     animated: false,
                                                                     id: "1013546723018285199",
                                                                     name: "tom5_icons_music"
+                                                                }
+                                                            },
+                                                            {
+                                                                label: "Parcerias",
+                                                                value: "parcerias",
+                                                                emoji: 
+                                                                {
+                                                                    animated: false,
+                                                                    id: "1013546823857746001",
+                                                                    name: "tom5_icons_partner"
                                                                 }
                                                             },
                                                             {
@@ -514,9 +808,9 @@ export class Comando extends Command {
                             },
                             {
                                 name: "Parcerias",
-                                description: "Parcerias feitas com o Tom5 e/ou o servidor do seu criador (TomG).",
-                                commands: [],
-                                infosAdd: "Tudo o que precisa fazer para entrar em contacto com a equipa de parcerias é enviar mensagem no privado do Tom5 escrito **\`t.parceria\`**, e seguir as indicações do bot."
+                                description: "Parcerias feitas com o Tom5 e/ou o servidor do seu criador (TomG). Sistema disponível também localmente para servidores.",
+                                commands: ["config parcerias", "parceria"],
+                                infosAdd: "No caso de parcerias com o bot, tudo o que precisa fazer para entrar em contacto com a equipa de parcerias é enviar mensagem no privado do Tom5 escrito **\`t.parceria\`**, e seguir as indicações do bot."
                             }
                         ]
 
@@ -577,13 +871,27 @@ export class Comando extends Command {
 
                                 for(let c of sistemas[x].commands) {
 
-                                    let cmd = (await this.client.application?.commands.fetch())?.filter(a => a.name === c).map(a => a)[0]!
+                                    let cmd = (await this.client.application?.commands.fetch())?.filter(a => a.name === c).map(a => a)[0]
 
-                                    let cmd2: any = this.client.utils.commands.slash.get(c)
+                                    const split = c.split(` `)
 
-                                    let desc = cmd.description.replace("[🧪] ", "")?.replace("[🎵] ", "")?.replace("[📒] ", "")
+                                    if(!cmd && split.length > 0) {
+                                        let cmd1 = (await this.client.application?.commands.fetch())?.filter(a => a.name === split[0]).map(a => a)[0]
+                                        let cmd1_1 = cmd1?.options.filter(x => x.name == split[1])[0]
+                                        let cmd2: any = this.client.utils.commands.slash.get(cmd1?.name!)
 
-                                    string += `> - </${cmd.name}:${cmd.id}> ${desc} [\`${cmd2.usage}\`]\n`
+                                        let desc = cmd1?.description.replace("[🧪] ", "")?.replace("[🪙]", "")?.replace("[🎈]", "")?.replace("[🎵] ", "")?.replace("[🤝]", "")?.replace("[📒] ", "")
+
+                                        string += `> - </${cmd1?.name} ${cmd1_1?.name}:${cmd1?.id}> ${desc} [\`${cmd2.usage}\`]\n`
+                                    } else {
+                                        let cmd2: any = this.client.utils.commands.slash.get(c)
+
+                                        // "[🧪]", "[🪙]", "[🎈]", "[🎵]", "[🤝]", "[📒]"
+
+                                        let desc = cmd?.description.replace("[🧪] ", "")?.replace("[🪙]", "")?.replace("[🎈]", "")?.replace("[🎵] ", "")?.replace("[🤝]", "")?.replace("[📒] ", "")
+
+                                        string += `> - </${cmd?.name}:${cmd?.id}> ${desc} [\`${cmd2.usage}\`]\n`
+                                    }
                                 }
 
                                 return string

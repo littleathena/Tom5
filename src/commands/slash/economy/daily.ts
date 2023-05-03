@@ -32,13 +32,13 @@ export class Comando extends Command {
             let nextClaim = userDoc.economia.daily.nextClaim
             let now = Date.now()
 
-            if(now < nextClaim) {
+            if (now < nextClaim) {
                 return ctx.interaction?.reply(
                     {
                         embeds: [
                             new EmbedBuilder()
                             .setColor("#2a2d31")
-                            .setDescription(`**(${this.client._emojis.errado}) Já resgatou o seu daily hoje. Volte <t:${~~(nextClaim / 1000)}:R>.**`)
+                            .setDescription(`**(${this.client._emojis.errado}) Já pegou o seu daily de hoje. Volte <t:${~~(nextClaim / 1000)}:R> para uma nova coleta.**`)
                         ]
                     }
                 )
@@ -52,8 +52,10 @@ export class Comando extends Command {
                     _id: ctx.interaction?.user.id
                 },
                 {
+                    $inc: {
+                        "economia.wallet": reward,
+                    },
                     $set: {
-                        "economia.wallet": userDoc.economia.wallet + reward,
                         "economia.daily.lastClaim": Date.now(),
                         "economia.daily.nextClaim": Date.now() + 86400000
                     },
@@ -72,7 +74,7 @@ export class Comando extends Command {
                     embeds: [
                         new EmbedBuilder()
                         .setColor("#2a2d31")
-                        .setDescription(`**(${this.client._emojis.certo}) Recebeste \`${reward}\` <:tom5_icons_dollar:1013544459503423618> TomCoins! Volta <t:${~~((Date.now() + 86400000) / 1000)}:R>.**`)
+                        .setDescription(`**(${this.client._emojis.certo}) recebeu \`${reward}\` <:tom5_icons_dollar:1013544459503423618> tomCoins na sua recompensa diária! Volte <t:${~~((Date.now() + 86400000) / 1000)}:R> para ganhar mais.**`)
                     ]
                 }
             )

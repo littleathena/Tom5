@@ -1,5 +1,4 @@
-import { Client, GatewayIntentBits, Options, ActivityType, Collection, Partials
- } from "discord.js";
+import { Client, GatewayIntentBits, Options, ActivityType, Collection, Partials, GlobalSweepFilter, User} from "discord.js";
 import CommandsManager from "../managers/commandsManager";
 import EventsManager from "../managers/eventsManager";
 import chalk from "chalk"
