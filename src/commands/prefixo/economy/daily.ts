@@ -36,8 +36,8 @@ export class Comando extends Command {
                     {
                         embeds: [
                             new EmbedBuilder()
-                                .setColor("#2a2d31")
-                                .setDescription(`**(${this.client._emojis.errado}) Já pegou o seu daily de hoje. Volte <t:${~~(nextClaim / 1000)}:R> para uma nova coleta.**`)
+                            .setColor("#2a2d31")
+                            .setDescription(`**(${this.client._emojis.errado}) Já pegou o seu daily de hoje. Volte <t:${~~(nextClaim / 1000)}:R> para uma nova coleta.**`)
                         ]
                     }
                 )
@@ -72,8 +72,8 @@ export class Comando extends Command {
                 {
                     embeds: [
                         new EmbedBuilder()
-                            .setColor("#2a2d31")
-                            .setDescription(`**(${this.client._emojis.certo}) recebeu \`${reward}\` <:tom5_icons_dollar:1013544459503423618> tomCoins na sua recompensa diária! Volte <t:${~~((Date.now() + 86400000) / 1000)}:R> para ganhar mais.**`)
+                        .setColor("#2a2d31")
+                        .setDescription(`**(${this.client._emojis.certo}) recebeu \`${reward}\` <:tom5_icons_dollar:1013544459503423618> tomCoins na sua recompensa diária! Volte <t:${~~((Date.now() + 86400000) / 1000)}:R> para ganhar mais.**`)
                     ]
                 }
             )
